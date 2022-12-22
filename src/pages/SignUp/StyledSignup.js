@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const ScreenContainer = styled.div`
     background: #000;
     width: 100%;
@@ -8,16 +7,11 @@ export const ScreenContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
-    img{
-        width: 299px;
-        align-self: center;
-        margin-top: 40%;
-        margin-bottom: 30%;
-    }
     span{
+        border: 1px solid red;
         color: #fff;
-        margin-top: 24px;
         font-size: 14px;
         text-decoration: underline;
     }
