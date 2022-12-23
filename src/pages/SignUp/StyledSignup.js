@@ -10,7 +10,6 @@ export const ScreenContainer = styled.div`
     justify-content: center;
 
     span{
-        border: 1px solid red;
         color: #fff;
         font-size: 14px;
         text-decoration: underline;
