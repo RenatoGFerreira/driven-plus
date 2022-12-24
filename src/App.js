@@ -7,11 +7,13 @@ import Signup from "./pages/SignUp/Signup"
 import Subscription from "./pages/Subscription/Subscription"
 import Home from "./pages/Home/Home"
 
+import profilePicture from "./assets/profile.png"
+
 export default function App() {
 
-  const palavra = "arroz"
+  const perfil = "https://love.doghero.com.br/wp-content/uploads/2018/12/golden-retriever-1.png"
   return (
-    <AuthContext.Provider value={palavra}>
+    <AuthContext.Provider value={perfil}>
       <BrowserRouter>
         <GlobalStyle />
         <Routes>

@@ -1,6 +1,12 @@
+import { ScreenContainer } from "./StyledHome";
+import Header from "../../components/Header/Header"
+
 export default function Home(){
     return(
-        <p>Home</p>
+        <ScreenContainer>
+            <Header/>
+            Pagina Home
+        </ScreenContainer>
     )
 
 }

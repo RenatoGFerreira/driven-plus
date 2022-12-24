@@ -15,6 +15,7 @@ export default function Login() {
         event.preventDefault()
 
         const baseUrl = "https://mock-api.driven.com.br/api/v4/driven-plus/auth/login"
+        
         const baseLogin = {
             email: email,
             password: senha
@@ -35,8 +36,6 @@ export default function Login() {
 
         setEmail("")
         setSenha("")
-
-
     }
 
     return (
