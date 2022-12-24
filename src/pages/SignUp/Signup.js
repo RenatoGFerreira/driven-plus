@@ -22,16 +22,12 @@ export default function Signup() {
             password: password
         }
 
-        console.log(cadastroDrivenPlus)
-
         const promise = axios.post(urlSignup, cadastroDrivenPlus)
         promise.then( res => {
-            console.log(res.data)
             navigate("/")
         })
         promise.catch(
             err => {
-                console.log(err.response.data)
                 alert(`[ERRO] ${err.response.data.message}`)
             }
             

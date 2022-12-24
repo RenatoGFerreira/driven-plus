@@ -6,7 +6,7 @@ import AuthContext from "../../contexts/AuthContext"
 
 export default function Header(){
 
-    const contexto = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
     return(
         <ScreenContainer>
             <TopoContainer>
@@ -14,11 +14,11 @@ export default function Header(){
                     <img src={imagem} alt="Plano Basics"/>
                 </LogoContainer>
                 <ProfileContainer>
-                    <img src={contexto} alt="ProfilePicture"/>
+                    <img src={profile} alt="ProfilePicture"/>
                 </ProfileContainer>
             </TopoContainer>
             <TituloContainer>
-                <h1>Olá, Fulano</h1>
+                <h1>Olá, {user.name}</h1>
             </TituloContainer>
         </ScreenContainer>
     )

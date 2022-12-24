@@ -1,25 +1,60 @@
 import { ScreenContainer, Cards } from "./StyledSubscription";
-import DrivenPlus from "../../assets/plan_one.png"
+import { useEffect, useContext, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
 
-export default function Subscription(){
-    
+export default function Subscription() {
+
+    const [plan, setPlan] = useState(null)
+    const { user } = useContext(AuthContext)
+
+    useEffect(() => {
+        const promise = axios.get('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships',
+            {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+        promise.then(res => {
+            setPlan(res.data)
+            console.log(plan)
+        })
+
+        promise.catch(err => {
+            console.log(err.res.data)
+        })
+
+    }, [])
+
+
+
+
     return (
         <ScreenContainer>
             <h1>Escolha seu Plano</h1>
+            {plan.map((i) => (
+                <Link to={`/Subscription/${i.id}`} key={i.id}>
+                    <Cards>
+                        <img src={i.image} alt="DrivenCard" />
+                        <span>R$ {i.price}</span>
+                    </Cards>
+                </Link>
+            ))}
 
-            <Cards>
-                <img src={DrivenPlus} alt="DrivenCard1"/>
-                <span>R$ 39,99</span>
-            </Cards>
-            <Cards>
-                <img src={DrivenPlus} alt="DrivenCard1"/>
-                <span>R$ 39,99</span>
-            </Cards>
-            <Cards>
-                <img src={DrivenPlus} alt="DrivenCard1"/>
-                <span>R$ 39,99</span>
-            </Cards>
+            
+
 
         </ScreenContainer>
     )
 }
+
+
+// {plan.map((i) => (
+//     <Link to={`/Subscription/${i.id}`} key={i.id}>
+//         <Cards>
+//             <img src={i.image} alt="DrivenCard" />
+//             <span>R$ {i.price}</span>
+//         </Cards>
+//     </Link>
+// ))}

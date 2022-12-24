@@ -7,6 +7,7 @@ export const ScreenContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
     h1{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
         color: #fff;
@@ -20,11 +21,10 @@ export const ScreenContainer = styled.div`
 export const Cards = styled.div`
     border: 3px solid #7e7e7e;
     border-radius: 12px;
-    width: 80%;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 30px 0;
+    padding: 30px 30px;
     margin-bottom: 20px;
     img{
         width: 140px;
