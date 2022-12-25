@@ -8,35 +8,40 @@ import AuthContext from "../../contexts/AuthContext"
 
 export default function Login() {
 
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
     const navigate = useNavigate()
-    const { setUser } = useContext(AuthContext)
+    const { setAuth } = useContext(AuthContext)
+    const [form, setForm] = useState({
+        email: '',
+        password: ''
+      })
 
     function validation(event) {
         event.preventDefault()
 
         const baseUrl = "https://mock-api.driven.com.br/api/v4/driven-plus/auth/login"
 
-        const baseLogin = {
-            email: email,
-            password: senha
-        }
-
-        const promise = axios.post(baseUrl, baseLogin)
+        const promise = axios.post(baseUrl, form)
 
         promise.then(res => {
-            const newUser = res.data
-            setUser(newUser)
-            navigate("/subscription")
+            setAuth(res.data.token)
+            localStorage.setItem('token', res.data.token)
+            {
+                if(res.data.menbership == null){
+                    navigate("/subscription")
+                }else{
+                    navigate("/home")
+                }
+            }
         })
 
         promise.catch(err => {
             alert(`[ERRO] ${err.response.data.message}`)
         })
+    }
 
-        setEmail("")
-        setSenha("")
+    function handleForm(e){
+        const {name, value} = e.target
+        setForm({...form, [name]: value})
     }
 
     return (
@@ -49,9 +54,9 @@ export default function Login() {
                     <input
                         type="email"
                         placeholder="E-mail"
-                        id="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        name="email"
+                        value={form.email}
+                        onChange={handleForm}
                         required />
                 </InputContainer>
 
@@ -60,9 +65,9 @@ export default function Login() {
                     <input
                         type="password"
                         placeholder="Senha"
-                        id="password"
-                        value={senha}
-                        onChange={e => setSenha(e.target.value)}
+                        name="password"
+                        value={form.senha}
+                        onChange={handleForm}
                         required />
                 </InputContainer>
 

@@ -25,6 +25,12 @@ export const LogoContainer = styled.div`
         width: 130px;
         height: 99px;
     }
+    h1{
+        color: #fff;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 37.5px;
+    }
 `
 export const BenefitsContainer = styled.div`
     margin: 10px 0;
@@ -48,7 +54,6 @@ export const TituloContainer = styled.div`
 export const BodyContainer = styled.div`
     font-size: 14px;
 `
-
 export const Form = styled.form`
 
     margin-top: 30px;
@@ -56,10 +61,8 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
 `
-
 export const TitleInput = styled.label`
 `
-
 export const InputContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -89,7 +92,6 @@ export const ButtonEnter = styled.button`
     font-weight: 700;
 
 `
-
 export const GrouopCard = styled.div`
     width: 80%;
     align-self: center;
@@ -98,4 +100,31 @@ export const GrouopCard = styled.div`
         width: 100%;
     }
 
+`
+
+export const ConfirmContainer = styled.div`
+border: 1px solid red;
+position: absolute;
+width: 100%;
+height: 100vh;
+background-color: rgba(0, 0, 0, .3);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+p{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #000;
+}
+
+`
+export const Confirm = styled.div`
+border: 1px solid blue;
+background-color: #fff;
+width: 80%;
+height: 20%;
+`
+export const ContainerButtons = styled.div`
+border: 1px solid red;
 `
