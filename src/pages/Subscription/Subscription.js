@@ -3,6 +3,7 @@ import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
+import loading from "../../assets/loading.gif"
 
 export default function Subscription() {
 
@@ -26,6 +27,11 @@ export default function Subscription() {
         })
 
     }, [])
+
+    if(plan.length === 0 ){
+        return <ScreenContainer>{loading}</ScreenContainer>
+
+    }
 
     return (
         <ScreenContainer>

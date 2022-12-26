@@ -103,28 +103,72 @@ export const GrouopCard = styled.div`
 `
 
 export const ConfirmContainer = styled.div`
-border: 1px solid red;
 position: absolute;
 width: 100%;
 height: 100vh;
-background-color: rgba(0, 0, 0, .3);
+background-color: rgba(0, 0, 0, .5);
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-
-p{
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: #000;
-}
-
 `
 export const Confirm = styled.div`
-border: 1px solid blue;
+border-radius: 12px;
 background-color: #fff;
 width: 80%;
 height: 20%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+`
+export const ContainerText = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+
+span{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #000;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+}
 `
 export const ContainerButtons = styled.div`
-border: 1px solid red;
+display: flex;
+flex-direction: row;
+justify-content: center;
+`
+
+export const ButtonCancel = styled.button`
+width: 95px;
+height: 52px;
+border-radius: 12px;
+margin: 10px;
+background-color: #FF4791;
+color: #fff;
+border: none;
+`
+
+export const ButtonConfirm = styled.button`
+width: 95px;
+height: 52px;
+border-radius: 12px;
+margin: 10px;
+background-color: #cecece;
+color: #fff;
+border: none;
+`
+
+export const ContainerIMG = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: right;
+img{
+    margin-top: 7px;
+    margin-right: 7px;
+    background-color: #000;
+}
+
 `

@@ -1,11 +1,13 @@
-import { ScreenContainer, HeaderContainer, LogoContainer, BenefitsContainer, PriceContainer, TituloContainer, BodyContainer, Form, InputContainer, TitleInput, ButtonEnter, GrouopCard, ConfirmContainer, Confirm, ContainerButtons  } from "./StyledInfoPlan";
+import { ScreenContainer, HeaderContainer, LogoContainer, BenefitsContainer, PriceContainer, TituloContainer, BodyContainer, Form, InputContainer, TitleInput, ButtonEnter, GrouopCard, ConfirmContainer, Confirm, ContainerButtons, ContainerIMG, ButtonConfirm, ButtonCancel, ContainerText } from "./StyledInfoPlan";
 import sheet from "../../assets/sheet.png"
 import money from "../../assets/money.png"
+import closeButton from "../../assets/close.png"
 import goBack from "../../assets/goBack.png"
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import axios from "axios";
 import AuthContext from "../../contexts/AuthContext";
+import loading from "../../assets/loading.gif"
 
 export default function InfoPlan() {
     const [plan, setPlan] = useState([])
@@ -19,6 +21,7 @@ export default function InfoPlan() {
         expirationNumber: "",
         expirationDate: ""
     })
+    const [confirmWindow, setConfirmWindow] = useState(false)
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idplan}`,
@@ -35,13 +38,19 @@ export default function InfoPlan() {
         promise.catch(err => console.log(err.response.data.message))
     }, [])
 
-    function paynmentConfirm() {
-        alert("Confirmar pamento?")
+    function paynmentConfirm(e) {
+        e.preventDefault()
+        setConfirmWindow(true)
     }
 
     function handleForm(event) {
         const { name, value } = event.target
         setForm({ ...form, [name]: value })
+    }
+
+    if(plan.length === 0 ){
+        return <ScreenContainer>{loading}</ScreenContainer>
+
     }
 
     return (
@@ -83,7 +92,8 @@ export default function InfoPlan() {
                         name="nameCard"
                         value={form.cardName}
                         onChange={handleForm}
-                        required />
+                    // required 
+                    />
                 </InputContainer>
 
                 <InputContainer>
@@ -94,7 +104,8 @@ export default function InfoPlan() {
                         id="digitsCard"
                         value={form.cardNumber}
                         onChange={handleForm}
-                        required />
+                    // required 
+                    />
                 </InputContainer>
 
                 <GrouopCard>
@@ -106,7 +117,8 @@ export default function InfoPlan() {
                             id="securityCode"
                             value={form.securityNumber}
                             onChange={handleForm}
-                            required />
+                        // required 
+                        />
                     </InputContainer>
 
                     <InputContainer>
@@ -117,21 +129,35 @@ export default function InfoPlan() {
                             id="validity"
                             value={form.expirationDate}
                             onChange={handleForm}
-                            required />
+                        // required 
+                        />
                     </InputContainer>
                 </GrouopCard>
                 <InputContainer>
                     <ButtonEnter>Assinar</ButtonEnter>
                 </InputContainer>
             </Form>
-            {/* <ConfirmContainer>
-                <Confirm>
-                    <p>Tem certeza que deseja assinar o plano Driven Plus (R$ 39.99)?</p>
-                    <ContainerButtons>
-                            x
-                    </ContainerButtons>
-                </Confirm>
-            </ConfirmContainer> */}
+            {confirmWindow ?
+                <ConfirmContainer>
+                    <Confirm>
+                        <ContainerIMG>
+                            <img src={closeButton} alt="close" onClick={() => setConfirmWindow(false)} />
+                        </ContainerIMG>
+                        <ContainerText>
+                            <span>Tem certeza que deseja assinar o plano {plan.name} (R$ {plan.price})?</span>
+                        </ContainerText>
+                        <ContainerButtons>
+                            <ButtonConfirm onClick={() => setConfirmWindow(false)}>
+                                Não
+                            </ButtonConfirm>
+                            <ButtonCancel >
+                                Sim
+                            </ButtonCancel>
+                        </ContainerButtons>
+                    </Confirm>
+                </ConfirmContainer>
+                : ""}
+
         </ScreenContainer>
     )
 }
