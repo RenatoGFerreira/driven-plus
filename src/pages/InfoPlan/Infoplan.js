@@ -4,10 +4,10 @@ import money from "../../assets/money.png"
 import closeButton from "../../assets/close.png"
 import goBack from "../../assets/goBack.png"
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import axios from "axios";
 import AuthContext from "../../contexts/AuthContext";
-import loading from "../../assets/loading.gif"
+import PlanContext from "../../contexts/PlanContext";
 
 export default function InfoPlan() {
     const [plan, setPlan] = useState([])
@@ -17,11 +17,12 @@ export default function InfoPlan() {
         menbershipId: "",
         cardName: "",
         cardNumber: "",
-        securityNumber: "",
-        expirationNumber: "",
+        securityNumber: Number(""),
         expirationDate: ""
     })
     const [confirmWindow, setConfirmWindow] = useState(false)
+    const { setPlanUser } = useContext(PlanContext)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idplan}`,
@@ -32,7 +33,6 @@ export default function InfoPlan() {
             })
         promise.then(res => {
             setForm({ ...form, "menbershipId": res.data.id })
-            console.log(res.data)
             setPlan(res.data)
         })
         promise.catch(err => console.log(err.response.data.message))
@@ -46,11 +46,26 @@ export default function InfoPlan() {
     function handleForm(event) {
         const { name, value } = event.target
         setForm({ ...form, [name]: value })
+
+        console.log(form)
     }
 
-    if(plan.length === 0 ){
-        return <ScreenContainer>{loading}</ScreenContainer>
-
+    function sendForm() {
+        console.log(form)
+        axios
+            .post(
+                'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions',
+                form,
+                { headers: { Authorization: `Bearer ${auth}` } }
+            )
+            .then(res => {
+                setPlanUser(res.data)
+                console.log(res.data)
+                navigate('/home')
+            })
+            .catch(res => {
+                alert(res.response.data.message)
+            })
     }
 
     return (
@@ -85,51 +100,51 @@ export default function InfoPlan() {
 
             <Form onSubmit={paynmentConfirm}>
                 <InputContainer>
-                    <TitleInput htmlFor="nameCard"></TitleInput>
+                    <TitleInput htmlFor="cardName"></TitleInput>
                     <input
                         type="text"
                         placeholder="Nome impresso no cartão"
-                        name="nameCard"
+                        name="cardName"
                         value={form.cardName}
                         onChange={handleForm}
-                    // required 
+                        required
                     />
                 </InputContainer>
 
                 <InputContainer>
-                    <TitleInput htmlFor="digitsCard"></TitleInput>
+                    <TitleInput htmlFor="cardNumber"></TitleInput>
                     <input
                         type="number"
                         placeholder="Digitos do cartão"
-                        id="digitsCard"
+                        name="cardNumber"
                         value={form.cardNumber}
                         onChange={handleForm}
-                    // required 
+                        required
                     />
                 </InputContainer>
 
                 <GrouopCard>
                     <InputContainer>
-                        <TitleInput htmlFor="securityCode"></TitleInput>
+                        <TitleInput htmlFor="securityNumber"></TitleInput>
                         <input
                             type="number"
                             placeholder="Código de segurança"
-                            id="securityCode"
-                            value={form.securityNumber}
+                            name="securityNumber"
+                            value={Number(form.securityNumber)}
                             onChange={handleForm}
-                        // required 
+                            required
                         />
                     </InputContainer>
 
                     <InputContainer>
-                        <TitleInput htmlFor="validity"></TitleInput>
+                        <TitleInput htmlFor="expirationDate"></TitleInput>
                         <input
-                            type="number"
+                            type="month"
                             placeholder="Validade"
-                            id="validity"
+                            name="expirationDate"
                             value={form.expirationDate}
                             onChange={handleForm}
-                        // required 
+                            required
                         />
                     </InputContainer>
                 </GrouopCard>
@@ -150,7 +165,7 @@ export default function InfoPlan() {
                             <ButtonConfirm onClick={() => setConfirmWindow(false)}>
                                 Não
                             </ButtonConfirm>
-                            <ButtonCancel >
+                            <ButtonCancel onClick={sendForm} >
                                 Sim
                             </ButtonCancel>
                         </ContainerButtons>

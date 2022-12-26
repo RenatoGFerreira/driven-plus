@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from "react"
 import GlobalStyle from "./assets/css/GlobalStyle"
 import AuthContext from "./contexts/AuthContext"
-import PlanContext from "./contexts/UserPlan"
+import PlanContext from "./contexts/PlanContext"
 
 import Login from "./pages/Login/Login"
 import Signup from "./pages/SignUp/Signup"
@@ -15,9 +15,10 @@ import InfoPlan from "./pages/InfoPlan/Infoplan"
 export default function App() {
 
   const [auth, setAuth] = useState(localStorage.getItem("token"))
+  const [planUser, setPlanUser] = useState([])
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
-      <PlanContext.Provider>
+      <PlanContext.Provider value={{planUser, setPlanUser}}>
         <BrowserRouter>
           <GlobalStyle />
           <Routes>
