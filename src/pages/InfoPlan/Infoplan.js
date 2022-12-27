@@ -6,7 +6,7 @@ import goBack from "../../assets/goBack.png"
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom"
 import axios from "axios";
-import AuthContext from "../../contexts/AuthContext";
+import AuthContext from "../../contexts/AuthContext"
 import PlanContext from "../../contexts/PlanContext";
 
 export default function InfoPlan() {
@@ -25,12 +25,11 @@ export default function InfoPlan() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        if (auth === null) {
+            navigate('/subscription')
+          }
         const promise = axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idplan}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${auth}`
-                }
-            })
+        { headers: { Authorization: `Bearer ${auth}` } })
         promise.then(res => {
             setForm({ ...form, "menbershipId": res.data.id })
             setPlan(res.data)

@@ -3,7 +3,7 @@ import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import loading from "../../assets/loading.gif"
+
 
 export default function Subscription() {
 
@@ -20,6 +20,7 @@ export default function Subscription() {
         promise.then(res => {
             setPlan(res.data)
             console.log(plan)
+            console.log(auth)
         })
 
         promise.catch(err => {
@@ -28,33 +29,17 @@ export default function Subscription() {
 
     }, [])
 
-    if(plan.length === 0 ){
-        return <ScreenContainer>{loading}</ScreenContainer>
-
-    }
-
     return (
         <ScreenContainer>
             <h1>Escolha seu Plano</h1>
             {plan.map((item, index) => (
-                <Link to={`/Subscription/${item.id}`}>
-                    <Cards key={index}>
+                <Link to={`/Subscription/${item.id}`} key={index} >
+                    <Cards>
                         <img src={item.image} alt="DrivenCard" />
                         <span>R$ {item.price}</span>
                     </Cards>
                 </Link>
             ))}
-
         </ScreenContainer>
     )
 }
-
-
-// {plan.map((i) => (
-//     <Link to={`/Subscription/${i.id}`} key={i.id}>
-//         <Cards>
-//             <img src={i.image} alt="DrivenCard" />
-//             <span>R$ {i.price}</span>
-//         </Cards>
-//     </Link>
-// ))}
