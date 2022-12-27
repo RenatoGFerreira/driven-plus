@@ -31,9 +31,7 @@ export default function Home() {
             </HeaderContainer>
             <ButtonsContainerCenter>
                 {planUser.perks.map(p => (
-                    <ButtonChangePlan
-                        onClick={() => window.open(p.link, '_blank', 'noopener,noreferrer')}
-                    >
+                    <ButtonChangePlan>
                         <p>{p.title}</p>
                     </ButtonChangePlan>
                 ))}
