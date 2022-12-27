@@ -8,7 +8,7 @@ import sheet from "../../assets/sheet.png"
 import money from "../../assets/money.png"
 import closeButton from "../../assets/close.png"
 import goBack from "../../assets/goBack.png"
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom"
 import axios from "axios";
 import AuthContext from "../../contexts/AuthContext"
@@ -17,16 +17,17 @@ import PlanContext from "../../contexts/PlanContext";
 export default function InfoPlan() {
     const [plan, setPlan] = useState([])
     const { idplan } = useParams()
-    const { auth } = useContext(AuthContext)
+    const { auth } = React.useContext(AuthContext)
+    const idPlan = Number(useParams().idPlan)
     const [form, setForm] = useState({
-        menbershipId: "",
+        menbershipId: Number(idPlan),
         cardName: "",
         cardNumber: "",
         securityNumber: Number(""),
         expirationDate: ""
     })
     const [confirmWindow, setConfirmWindow] = useState(false)
-    const { setPlanUser } = useContext(PlanContext)
+    const { setPlanUser } = React.useContext(PlanContext)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -36,8 +37,8 @@ export default function InfoPlan() {
         const config = { headers: { Authorization: `Bearer ${auth}` } }
         const promise = axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idplan}`, config)
         promise.then(res => {
-            console.log(res.data)
-            setForm({ ...form, "menbershipId": res.data.perks.menbershipId })
+            form.menbershipId = idPlan
+            setForm({ ...form})
             setPlan(res.data)
         })
         promise.catch(err => console.log(err.response.data.message))
@@ -54,14 +55,15 @@ export default function InfoPlan() {
     }
 
     function sendForm() {
-        axios.post('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions',
+        const promise = axios.post('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions',
                 form, { headers: { Authorization: `Bearer ${auth}` } })
-            .then(res => {
+            promise.then(res => {
+                localStorage.setItem('token', JSON.stringify(auth))
                 setPlanUser(res.data)
                 console.log(res.data)
                 navigate('/home')
             })
-            .catch(res => {
+            promise.catch(res => {
                 alert(res.response.data.message)
                 console.log(res.response.data)
             })

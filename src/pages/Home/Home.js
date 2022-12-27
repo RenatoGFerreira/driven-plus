@@ -9,7 +9,7 @@ import AuthContext from "../../contexts/AuthContext";
 
 export default function Home() {
 
-    //item genérico até que se tenha o plano
+    //item genérico até que se tenha o plano funcionando
     const planUser = {
         id: 1,
         name: "Driven Plus",

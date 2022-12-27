@@ -19,8 +19,7 @@ export default function Subscription() {
             })
         promise.then(res => {
             setPlan(res.data)
-            console.log(plan)
-            console.log(auth)
+            console.log(res.data)
         })
 
         promise.catch(err => {

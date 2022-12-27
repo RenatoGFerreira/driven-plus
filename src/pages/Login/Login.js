@@ -24,7 +24,7 @@ export default function Login() {
 
         promise.then(res => {
             setAuth(res.data.token)
-            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('token', JSON.stringify(res.data.token))
             {
                 if(res.data.menbership == null){
                     navigate("/subscription")
