@@ -1,4 +1,9 @@
-import { ScreenContainer, HeaderContainer, LogoContainer, BenefitsContainer, PriceContainer, TituloContainer, BodyContainer, Form, InputContainer, TitleInput, ButtonEnter, GrouopCard, ConfirmContainer, Confirm, ContainerButtons, ContainerIMG, ButtonConfirm, ButtonCancel, ContainerText } from "./StyledInfoPlan";
+import { ScreenContainer, HeaderContainer, LogoContainer, 
+BenefitsContainer, PriceContainer, TituloContainer, BodyContainer, 
+Form, InputContainer, TitleInput, ButtonEnter, GrouopCard, ConfirmContainer, 
+Confirm, ContainerButtons, ContainerIMG, ButtonConfirm, 
+ButtonCancel, ContainerText } from "./StyledInfoPlan";
+
 import sheet from "../../assets/sheet.png"
 import money from "../../assets/money.png"
 import closeButton from "../../assets/close.png"
@@ -28,10 +33,11 @@ export default function InfoPlan() {
         if (auth === null) {
             navigate('/subscription')
           }
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idplan}`,
-        { headers: { Authorization: `Bearer ${auth}` } })
+        const config = { headers: { Authorization: `Bearer ${auth}` } }
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idplan}`, config)
         promise.then(res => {
-            setForm({ ...form, "menbershipId": res.data.id })
+            console.log(res.data)
+            setForm({ ...form, "menbershipId": res.data.perks.menbershipId })
             setPlan(res.data)
         })
         promise.catch(err => console.log(err.response.data.message))
@@ -45,18 +51,11 @@ export default function InfoPlan() {
     function handleForm(event) {
         const { name, value } = event.target
         setForm({ ...form, [name]: value })
-
-        console.log(form)
     }
 
     function sendForm() {
-        console.log(form)
-        axios
-            .post(
-                'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions',
-                form,
-                { headers: { Authorization: `Bearer ${auth}` } }
-            )
+        axios.post('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions',
+                form, { headers: { Authorization: `Bearer ${auth}` } })
             .then(res => {
                 setPlanUser(res.data)
                 console.log(res.data)
@@ -64,6 +63,7 @@ export default function InfoPlan() {
             })
             .catch(res => {
                 alert(res.response.data.message)
+                console.log(res.response.data)
             })
     }
 
